@@ -8,7 +8,7 @@ September 9, 2026
 
 1. **Git is a workflow discipline**, not a storage or backup discipline. Git/GitHub provide the canonical version of code.
 2. **AI as co-author / Assistant**
-    - Obscure Commands
+    - Obscure Commands - [aliases](https://gist.github.com/nmagee/376c9b8d19edde584b31f44d3936d59c)
     - Tagging
     - Releases
     - Merge Conflicts
