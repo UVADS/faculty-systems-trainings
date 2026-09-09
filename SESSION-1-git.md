@@ -9,6 +9,6 @@ September 9, 2026
 3. **GHA and Automation** - [example repo](https://github.com/nmagee/gha-demo)
 4. **GHA and Agents** - human in-the-loop (or not!)
 5. **MCPs**
-  - [AWS](https://aws.amazon.com/products/developer-tools/agent-toolkit-for-aws/)
-  - [GitHub](https://github.com/github/github-mcp-server)
-  - [Rivanna](https://github.com/uvads/rivanna-mcp)
+    - [AWS](https://aws.amazon.com/products/developer-tools/agent-toolkit-for-aws/)
+    - [GitHub](https://github.com/github/github-mcp-server)
+    - [Rivanna](https://github.com/uvads/rivanna-mcp)
