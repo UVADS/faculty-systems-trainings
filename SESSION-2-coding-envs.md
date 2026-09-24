@@ -4,7 +4,7 @@ September 23, 2026
 
 ## Topics
 
-1. Code as documents
+1. **Code as documents**
 
     Tools: Notepad, TextEdit, email attachments, Dropbox.
     
@@ -12,7 +12,7 @@ September 23, 2026
     
     Q: How do you know which copy is current, and could you rerun last year's analysis today?
 
-2. Integrated environments
+2. **Integrated environments**
 
     Tools: RStudio, VS Code, Jupyter, PyCharm.
     
@@ -20,7 +20,7 @@ September 23, 2026
     
     Q: What does your environment catch that you'd otherwise miss?
 
-3. Code as a tracked, reproducible project
+3. **Code as a tracked, reproducible project**
 
     Tools: Git/GitHub, virtual environments (renv, venv, uv, conda), sometimes containers.
     
@@ -28,7 +28,7 @@ September 23, 2026
     
     Q: If a student or reviewer asked to rerun your results, what would break?
 
-4. AI-assisted coding
+4. **AI-assisted coding**
 
     Tools: GitHub Copilot, Cursor, chat assistants used alongside the editor.
     
@@ -36,7 +36,7 @@ September 23, 2026
 
     Q: How do you check AI-written code, and what does this mean for how students learn?
 
-5. Agentic development
+5. **Agentic development**
 
     Tools: Claude Code, Cursor's agent mode, similar tools.
     
