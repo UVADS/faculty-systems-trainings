@@ -64,3 +64,4 @@ October 14, 2026
 - [`prefect/github_commits.py`](prefect/github_commits.py) - a full extract → transform → load → plot pipeline against the GitHub API, with retries and DuckDB storage. Requires `GH_PAT`.
 - [`prefect/github_activity.py`](prefect/github_activity.py) - extends the above with issues/PRs, a vitality plot, and per-repo fan-out that tolerates individual failures.
 - Docs: [Prefect](https://docs.prefect.io/) · [Airflow](https://airflow.apache.org/docs/)
+- [Other Pipeline Orchestrators](https://uvads.github.io/workflow-basics/docs/intro/toolchoices/)
