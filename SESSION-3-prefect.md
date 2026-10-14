@@ -1,8 +1,10 @@
 # Faculty Systems Training
 
+<a href="https://www.prefect.io/"><img src="https://avatars.githubusercontent.com/u/39270919?s=200&v=4" alt="Prefect logo" width="100"></a>
+
 October 14, 2026
 
-> **Prefect** is a Python-based pipeline management framework. It is based on the client+server model.
+> **[Prefect](https://www.prefect.io/)** is a Python-based pipeline management framework. It is based on the client+server model.
 
 ## Topics
 
