@@ -2,7 +2,7 @@
 
 October 28, 2026
 
-![Apache Kafka](https://s3.amazonaws.com/uvasds-systems/images/kafka-logo-tall.png)
+<img src="https://s3.amazonaws.com/uvasds-systems/images/kafka-logo-tall.png" alt="Apache Kafka" style="float:right;">
 
 > **[Apache Kafka](https://kafka.apache.org/)** is a distributed event streaming platform. Producers write streams of records to it, Kafka stores them durably for a set period, and any number of consumers read them independently, in real time or later.
 
