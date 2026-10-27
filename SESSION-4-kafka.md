@@ -116,8 +116,12 @@ between ships in motion.
 
 ## For Teaching / Reference
 
-- [`prefect/simple_flow.py`](prefect/simple_flow.py) - two chained tasks; toggle between the serial loop and `.map()` to show concurrency (~60s vs. ~6s).
-- [`prefect/github_commits.py`](prefect/github_commits.py) - a full extract → transform → load → plot pipeline against the GitHub API, with retries and DuckDB storage. Requires `GH_PAT`.
-- [`prefect/github_activity.py`](prefect/github_activity.py) - extends the above with issues/PRs, a vitality plot, and per-repo fan-out that tolerates individual failures.
-- Docs: [Prefect](https://docs.prefect.io/) · [Airflow](https://airflow.apache.org/docs/)
-- [Other Pipeline Orchestrators](https://uvads.github.io/workflow-basics/docs/intro/toolchoices/)
+- [`kafka/docker-compose.yml`](kafka/docker-compose.yml) - a local 3-broker cluster (Redpanda, Kafka API-compatible), the Redpanda Console GUI at http://localhost:8080, and Redis. Start with `docker compose up -d` from `kafka/`.
+- [`kafka/seismic/`](kafka/seismic/) - a live earthquake pipeline using the cluster above:
+    - [`seismic-producer.py`](kafka/seismic/seismic-producer.py) - reads the [EMSC Seismic Portal](https://www.seismicportal.eu/) websocket and produces each event to the `seismic` topic.
+    - [`seismic-consumer.py`](kafka/seismic/seismic-consumer.py) - consumes the topic and writes each quake to Redis with a 24h TTL.
+    - [`seismic-map.py`](kafka/seismic/seismic-map.py) - Streamlit map of the quakes in Redis, colored by magnitude.
+    - [`together.py`](kafka/seismic/together.py) - runs all three from one terminal (`python together.py`).
+- Docs: [Apache Kafka](https://kafka.apache.org/documentation/) · [Kafka on GitHub](https://github.com/apache/kafka) · [Redpanda](https://docs.redpanda.com/) · [Redpanda Console](https://docs.redpanda.com/current/manage/console/)
+- Python clients: [Quix Streams](https://quix.io/docs/quix-streams/introduction.html) (used in the seismic demo) · [confluent-kafka-python](https://github.com/confluentinc/confluent-kafka-python) (used in the snippets above)
+- Learning: [Confluent Developer courses](https://developer.confluent.io/courses/apache-kafka/events/) · [Kafka 101 (YouTube)](https://www.youtube.com/playlist?list=PLa7VYi0yPIH0KbnJQcMv5N9iW8HkZHztH) · [Apache Kafka Fundamentals (YouTube)](https://www.youtube.com/playlist?list=PLa7VYi0yPIH2PelhRHoFR5iQgflg-y6JA)

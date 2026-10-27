@@ -4,7 +4,7 @@ Seismic Map
 Streamlit app that reads earthquake events from Redis (written by
 seismic-consumer.py) and plots them on a map, refreshing every few seconds.
 
-Run with:  streamlit run 06_kafka/seismic/seismic-map.py
+Run with:  streamlit run kafka/seismic/seismic-map.py
 """
 
 import os
