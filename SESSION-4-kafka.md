@@ -121,7 +121,7 @@ messages, extracting relevant data and writes it to a Redis database.
 from Redis. It filters out locations older than 24 hours and draws a tracking vector
 between ship waypoints (if in motion).
 
-## Seismic Data
+### Seismic Data
 
 For example code of a similar project, see the accompanying Python modules and Docker
 compose file.
