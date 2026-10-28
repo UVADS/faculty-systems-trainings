@@ -143,7 +143,7 @@ between ship waypoints (if in motion).
 ### Seismic Data
 
 For example code of a similar project, see the accompanying Python modules and Docker
-compose file.
+compose file in [`kafka/`](kafka/) and [`kafka/seismic/`](kafka/seismic/)
 
 - Using Docker, bring up the Kafka cluster: `docker compose up -d`
 - Open the Redpanda Kafka UI http://127.0.0.1:8080/
