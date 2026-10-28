@@ -141,7 +141,7 @@ Architecture:
 - A Kafka **publisher** that connects to the
 **[AISStream Websocket](https://aisstream.io/)** receives position messages
 every few seconds tracking ships within a bounded geographic "box" and publishes
-them to a Kafka topic. This service runs in a container.
+them to a Kafka topic.
 - Apache Kafka runs in the UVA Research Computing Kubernetes cluster, storing
 event messages for up to 24 hours.
 - A **consumer** process polls the Kafka topic for new
