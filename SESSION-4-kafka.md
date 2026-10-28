@@ -49,37 +49,38 @@ October 28, 2026
     - Idempotent producers (default in current clients) prevent duplicates when a send is retried.
 
     ```python
-    from confluent_kafka import Producer
-    import json
+    from quixstreams import Application
 
-    p = Producer({"bootstrap.servers": "kafka:9092"})
-    p.produce("ais-positions", key=str(msg["mmsi"]), value=json.dumps(msg))
-    p.flush()
+    app = Application(broker_address="kafka:9092")
+    topic = app.topic("ais-positions", value_serializer="json")
+
+    with app.get_producer() as producer:  # flushes on exit
+        out = topic.serialize(key=str(msg["mmsi"]), value=msg)
+        producer.produce(topic=topic.name, key=out.key, value=out.value)
     ```
 
 5. **Consumers, consumer groups, and offsets**
 
     A **consumer** reads events from a topic by polling. Every event in a partition has a sequential **offset** (0, 1, 2, ...). The consumer's position is just "the next offset to read," and it periodically **commits** that offset back to Kafka. If the consumer crashes and restarts, it resumes from the last committed offset.
 
-    - A **consumer group** (`group.id`) is a set of consumers sharing the work. Kafka assigns each partition to exactly one consumer in the group. Add consumers to scale out, up to the number of partitions. If one dies, its partitions are reassigned (a **rebalance**).
+    - A **consumer group** (`group.id`; `consumer_group` in Quix Streams) is a set of consumers sharing the work. Kafka assigns each partition to exactly one consumer in the group. Add consumers to scale out, up to the number of partitions. If one dies, its partitions are reassigned (a **rebalance**).
     - **Different groups are independent.** The Redis writer in the shipping example is one group; an archiver writing to S3 could be a second group reading the same topic, each with its own offsets.
-    - `auto.offset.reset` decides where a new group starts: `earliest` (replay everything retained) or `latest` (only new events).
+    - `auto.offset.reset` (`auto_offset_reset` in Quix Streams) decides where a new group starts: `earliest` (replay everything retained) or `latest` (only new events).
     - Delivery semantics depend on when you commit: commit after processing gives **at-least-once** (possible duplicates on restart, so make writes idempotent); commit before processing gives at-most-once (possible loss).
 
     ```python
-    from confluent_kafka import Consumer
+    from quixstreams import Application
 
-    c = Consumer({
-        "bootstrap.servers": "kafka:9092",
-        "group.id": "redis-writer",
-        "auto.offset.reset": "earliest",
-    })
-    c.subscribe(["ais-positions"])
-    while True:
-        msg = c.poll(1.0)
-        if msg is None or msg.error():
-            continue
-        handle(msg.key(), msg.value())
+    app = Application(
+        broker_address="kafka:9092",
+        consumer_group="redis-writer",
+        auto_offset_reset="earliest",
+    )
+    topic = app.topic("ais-positions", value_deserializer="json")
+
+    sdf = app.dataframe(topic)
+    sdf = sdf.update(handle)  # called with each message value
+    app.run()                 # polls, processes, and commits offsets after processing
     ```
 
     Q: If your consumer were down for six hours, what should happen when it comes back: catch up on everything, or skip to now?
@@ -142,5 +143,5 @@ To run all modules together, run `together.py`.
     - [`seismic-map.py`](kafka/seismic/seismic-map.py) - Streamlit map of the quakes in Redis, colored by magnitude.
     - [`together.py`](kafka/seismic/together.py) - runs all three from one terminal (`python together.py`).
 - Docs: [Apache Kafka](https://kafka.apache.org/documentation/) · [Kafka on GitHub](https://github.com/apache/kafka) · [Redpanda](https://docs.redpanda.com/) · [Redpanda Console](https://docs.redpanda.com/current/manage/console/)
-- Python clients: [Quix Streams](https://quix.io/docs/quix-streams/introduction.html) (used in the seismic demo) · [confluent-kafka-python](https://github.com/confluentinc/confluent-kafka-python) (used in the snippets above)
+- Python clients: [Quix Streams](https://quix.io/docs/quix-streams/introduction.html) (used in the snippets above and the seismic demo) · [confluent-kafka-python](https://github.com/confluentinc/confluent-kafka-python) (lower-level client that Quix Streams builds on)
 - Learning: [Confluent Developer courses](https://developer.confluent.io/courses/apache-kafka/events/) · [Kafka 101 (YouTube)](https://www.youtube.com/playlist?list=PLa7VYi0yPIH0KbnJQcMv5N9iW8HkZHztH) · [Apache Kafka Fundamentals (YouTube)](https://www.youtube.com/playlist?list=PLa7VYi0yPIH2PelhRHoFR5iQgflg-y6JA)
