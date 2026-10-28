@@ -114,6 +114,17 @@ October 28, 2026
     - On Kubernetes, Kafka is usually run through an operator such as **[Strimzi](https://strimzi.io/)**, which manages brokers, topics, and users as Kubernetes resources.
 
 
+## Architecture
+
+Kafka is a *broker* between a data producer and its consumer(s). It is neither storage
+nor a database, but instead a buffer where time-sensitive events are stored for a period
+of time.
+
+Typically, producers send messages into Kafka topics, and then consumers extract the
+meaningful portions of those messages for other work: analytics, anomaly detection,
+to kick off transactions, for deserialization into a database.
+
+
 ## Example Projects
 
 ### Shipping Data
@@ -125,8 +136,7 @@ arrivals, analyze trade flows, and monitor compliance and emissions.
 
 Architecture:
 
-![Kafka PubSub Architecture](https://s3.amazonaws.com/uvasds-systems/images/
-shipping-arch.png)
+![Kafka PubSub Architecture](https://s3.amazonaws.com/uvasds-systems/images/shipping-arch.png)
 
 - A Kafka **publisher** that connects to the
 **[AISStream Websocket](https://aisstream.io/)** receives position messages
@@ -142,11 +152,13 @@ between ship waypoints (if in motion).
 
 ### Seismic Data
 
+See the [**README**](kafka/seismic/)
+
 For example code of a similar project, see the accompanying Python modules and Docker
 compose file in [`kafka/`](kafka/) and [`kafka/seismic/`](kafka/seismic/)
 
 - Using Docker, bring up the Kafka cluster: `docker compose up -d`
-- Open the Redpanda Kafka UI http://127.0.0.1:8080/
+- Open the Redpanda Kafka UI `http://127.0.0.1:8080/`
 - Run the `seismic-producer.py` module found in `kafka/seismic` and note a new topic with messages as they arrive.
 - Run the `seismic-consumer.py` module and messages in Kafka will be read into the Redis database.
 - Run the `seismic-map.py` module for a Streamlit visualization available at http://localhost:8501/
