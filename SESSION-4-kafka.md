@@ -94,27 +94,44 @@ October 28, 2026
     - On Kubernetes, Kafka is usually run through an operator such as **[Strimzi](https://strimzi.io/)**, which manages brokers, topics, and users as Kubernetes resources.
 
 
-## Example Project
+## Example Projects
 
-See the **[Shipping Tracker](https://shipping.pods.uvarc.io/)** based on free AIS data. In shipping, AIS data 
+### Shipping Data
+
+For a working example see the **[Shipping Tracker](https://shipping.pods.uvarc.io/)** based on free AIS data. In shipping, AIS data 
 is the real-time position, speed, and identity information that vessels broadcast 
 automatically, which the industry uses to track fleets, manage ports, predict 
 arrivals, analyze trade flows, and monitor compliance and emissions.
 
 Architecture:
 
-- A Kafka **publisher** that connects to the free 
-**[AISStream Websocket](https://aisstream.io/)**, which receives position messages
+![Kafka PubSub Architecture](https://s3.amazonaws.com/uvasds-systems/images/
+shipping-arch.png)
+
+- A Kafka **publisher** that connects to the
+**[AISStream Websocket](https://aisstream.io/)** receives position messages
 every few seconds tracking ships within a bounded geographic "box" and publishes
 them to a Kafka topic. This service runs in a container.
-- Apache Kafka, running in the UVA Research Computing Kubernetes cluster, stores
-these messages for up to 24 hours.
-- A **consumer** process, also containerized, that polls the Kafka topic for new
-messages, extracting relevant data and writing it to a Redis database.
-- Finally, a Streamlit application, also containerized, that displays tracking data
+- Apache Kafka runs in the UVA Research Computing Kubernetes cluster, storing
+event messages for up to 24 hours.
+- A **consumer** process polls the Kafka topic for new
+messages, extracting relevant data and writes it to a Redis database.
+- A Streamlit application displays tracking data
 from Redis. It filters out locations older than 24 hours and draws a tracking vector
-between ships in motion.
+between ship waypoints (if in motion).
 
+## Seismic Data
+
+For example code of a similar project, see the accompanying Python modules and Docker
+compose file.
+
+- Using Docker, bring up the Kafka cluster: `docker compose up -d`
+- Open the Redpanda Kafka UI http://127.0.0.1:8080/
+- Run the `seismic-producer.py` module found in `kafka/seismic` and note a new topic with messages as they arrive.
+- Run the `seismic-consumer.py` module and messages in Kafka will be read into the Redis database.
+- Run the `seismic-map.py` module for a Streamlit visualization available at http://localhost:8501/
+
+To run all modules together, run `together.py`.
 
 ## For Teaching / Reference
 
