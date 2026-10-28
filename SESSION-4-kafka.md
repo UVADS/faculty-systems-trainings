@@ -12,6 +12,25 @@ October 28, 2026
 
     An **event** (or record/message) is a small fact about something that happened: "vessel 367001234 was at 37.8N, 122.4W at 14:02:11." Each event has a **key**, a **value** (usually JSON, Avro, or Protobuf), and a **timestamp**.
 
+    ```
+    key: 20261028_0000223
+    timestamp: 2026-10-28 10:35:47.545
+    value: {
+        "action": "create",
+        "data": {
+            "id": "20261028_0000223",
+            "properties": {
+                "time": "2026-10-28T14:28:50.0Z",
+                "flynn_region": "ANTOFAGASTA, CHILE",
+                "lat": -21.58,
+                "lon": -68.72,
+                "depth": 133.1,
+                "mag": 2.6
+            }
+        }
+    }
+    ```
+
     Kafka's core idea is the **append-only log**. New events are added to the end; existing events are never modified. Reading does not delete anything. This is the main difference from a traditional message queue:
 
     | | **Message queue** (SQS, RabbitMQ) | **Kafka** |
