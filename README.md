@@ -6,5 +6,5 @@ Fall 2026 sessions
 - [**Session 2** - Sept 23](SESSION-2-coding-envs.md) - Coding Environments 
 - [**Session 3** - Oct 14](SESSION-3-prefect.md) - Workflow Management with Prefect
 - [**Session 4** - Oct 28](SESSION-4-kafka.md) - Apache Kafka and Time-Series Data
-- Session 5 - Nov 11
+- [**Session 5** - Nov 11](SESSION-5-containers.md) - Containers and Application Workflows
 - Session 6 - Dec 9
